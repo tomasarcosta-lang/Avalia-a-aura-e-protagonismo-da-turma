@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medidor de Aura e Protagonismo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body.theme-dark {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+
+        body.theme-light {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        body.theme-neon {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #fff;
+        }
+
+        body.theme-nature {
+            background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+            color: #fff;
+        }
+
+        body.theme-sunset {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: #fff;
+        }
+
+        body.theme-ocean {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+
+        body.theme-fire {
+            background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
+            color: #fff;
+        }
+
+        body.theme-galaxy {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            color: #fff;
+        }
+
+        body.theme-candy {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+        }
+
+        body.theme-mint {
+            background: linear-gradient(135deg, #00f260 0%, #0575e6 100%);
+            color: #fff;
+        }
+
+        body.theme-purple {
+            background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+            color: #fff;
+        }
+
+        body.theme-rainbow {
+            background: linear-gradient(135deg, #ff0080 0%, #ff8c00 20%, #40e0d0 40%, #ff0080 60%, #7b68ee 80%, #ff1493 100%);
+            color: #fff;
+        }
+
+        body.theme-midnight {
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            color: #fff;
+        }
+
+        body.theme-rose {
+            background: linear-gradient(135deg, #e65c00 0%, #f9d423 100%);
+            color: #fff;
+        }
+
+        body.theme-ice {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: gold;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+            font-size: 0.8em;
+        }
+
+        .user-section {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .user-welcome {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .btn-register, .btn-logout, .btn-admin {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            background: #51cf66;
+            color: white;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn-logout {
+            background: #ff6b6b;
+        }
+
+        .btn-admin {
+            background: gold;
+            color: #000;
+        }
+
+        .btn-register:hover, .btn-logout:hover, .btn-admin:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .register-form, .admin-panel {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 20px auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .register-form input, .admin-panel input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .register-form button, .admin-panel button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #51cf66;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+
+        .register-form button:hover, .admin-panel button:hover {
+            transform: scale(1.02);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        select, input {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select:hover, input:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .person-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+        }
+
+        .person-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .person-name {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .btn-delete-person {
+            background: #ff0000;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-value input {
+            width: 100px;
+            text-align: center;
+            font-size: 0.8em;
+            padding: 5px;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-minus, .btn-plus {
+            width: 45px;
+            height: 45px;
+            font-size: 1.5em;
+        }
+
+        .btn-minus {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-plus {
+            background: #51cf66;
+            color: white;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .like-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-like, .btn-dislike {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-like.active {
+            background: #51cf66;
+        }
+
+        .btn-dislike.active {
+            background: #ff6b6b;
+        }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .btn-comment {
+            background: #339af0;
+            color: white;
+            width: 100%;
+        }
+
+        .comments-list {
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            position: relative;
+        }
+
+        .comment-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .comment-actions button {
+            padding: 5px 10px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            min-width: 50px;
+        }
+
+        .share-link {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .link-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="theme-dark">
+    <div class="container">
+        <header>
+            <h1>✨ Medidor de Aura e Protagonismo ✨</h1>
+            <p class="subtitle">Avalia o protagonismo e a aura das pessoas da turma :D</p>
+        </header>
+
+        <div class="user-section" id="userSection">
+            <div id="guestView">
+                <p class="user-welcome">👋 Olá! Estás a usar como convidado</p>
+                <button class="btn-register" onclick="showRegisterForm()">📝 Cadastrar-me</button>
+            </div>
+            
+            <div id="loggedView" class="hidden">
+                <p class="user-welcome">👋 Olá, <strong id="username"></strong><span id="adminBadge" class="admin-badge hidden">👑 ADMIN</span></p>
+                <button class="btn-logout" onclick="logout()">🚪 Sair</button>
+                <button id="adminBtn" class="btn-admin hidden" onclick="toggleAdminPanel()">⚙️ Painel Admin</button>
+            </div>
+
+            <div id="registerForm" class="register-form hidden">
+                <h3 style="margin-bottom: 15px;">Cadastro</h3>
+                <input type="text" id="regName" placeholder="Teu nome">
+                <button onclick="register()">✓ Cadastrar</button>
+                <button onclick="hideRegisterForm()" style="background: #666;">✕ Cancelar</button>
+            </div>
+
+            <div id="adminPanel" class="admin-panel hidden">
+                <h3 style="margin-bottom: 15px;">⚙️ Painel de Administração</h3>
+                <input type="text" id="newPersonName" placeholder="Nome da nova pessoa">
+                <button onclick="addPerson()" style="background: #51cf66;">➕ Adicionar Pessoa</button>
+                <button onclick="toggleAdminPanel()" style="background: #666;">✕ Fechar</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <select id="themeSelect">
+                <option value="theme-dark">🌙 Tema Escuro</option>
+                <option value="theme-light">☀️ Tema Claro</option>
+                <option value="theme-neon">💜 Tema Neon</option>
+                <option value="theme-nature">🌿 Tema Natureza</option>
+                <option value="theme-sunset">🌅 Tema Pôr do Sol</option>
+                <option value="theme-ocean">🌊 Tema Oceano</option>
+                <option value="theme-fire">🔥 Tema Fogo</option>
+                <option value="theme-galaxy">🌌 Tema Galáxia</option>
+                <option value="theme-candy">🍭 Tema Doce</option>
+                <option value="theme-mint">🍃 Tema Menta</option>
+                <option value="theme-purple">💜 Tema Roxo</option>
+                <option value="theme-rainbow">🌈 Tema Arco-Íris</option>
+                <option value="theme-midnight">🌃 Tema Meia-Noite</option>
+                <option value="theme-rose">🌹 Tema Rosa</option>
+                <option value="theme-ice">❄️ Tema Gelo</option>
+            </select>
+
+            <select id="sortSelect">
+                <option value="alpha">📝 Ordem Alfabética</option>
+                <option value="aura-desc">⬆️ Maior Aura</option>
+                <option value="aura-asc">⬇️ Menor Aura</option>
+                <option value="prot-desc">⭐ Maior Protagonismo</option>
+                <option value="prot-asc">💤 Menor Protagonismo</option>
+            </select>
+
+            <input type="number" id="limitSelect" placeholder="Ver quantas pessoas?" min="1">
+        </div>
+
+        <div id="peopleContainer"></div>
+
+        <div class="share-link">
+            <h3>📤 Partilha com os colegas!</h3>
+            <p>Copia este link e envia para a turma:</p>
+            <div class="link-box" id="shareLink"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = '$2a$10$ZSOt.I/bSrDUQutkrLhMM.bhZUFSiH2LBbKM0WabgTjkTtKaeUKIa';
+        const BIN_ID = '678f8e7aacd3cb34a8c56f48'; // Substitui depois de criar o bin
+        
+        let people = [
+            "Ana", "André", "Beatriz", "Bruno", "Carolina", "Diana", "Duarte", 
+            "Fábio", "Francisco", "Gabriel", "Gabriela", "Íris", "José", "Kévim",
+            "Luís", "Mafalda", "Mara", "Maria", "Matilde", "Miriam", "Pedro", 
+            "Rafael", "Renato", "Santiago", "Soraia", "Tomás"
+        ];
+
+        const badWords = ['merda', 'caralho', 'foda', 'puta', 'cu', 'porra', 'burro', 'idiota'];
+        let data = {};
+        let isAdmin = false;
+
+        function censorComment(text) {
+            let censored = text;
+            badWords.forEach(word => {
+                const regex = new RegExp(word, 'gi');
+                censored = censored.replace(regex, '*'.repeat(word.length));
+            });
+            return censored;
+        }
+
+        async function loadFromJSONBin() {
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: {
+                        'X-Master-Key': API_KEY
+                    }
+                });
+                const result = await response.json();
+                if (result.record) {
+                    data = result.record.data || {};
+                    people = result.record.people || people;
+                }
+            } catch (e) {
+                initializeData();
+            }
+        }
+
+        async function saveToJSONBin() {
+            try {
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': API_KEY
+                    },
+                    body: JSON.stringify({
+                        people: people,
+                        data: data
+                    })
+                });
+            } catch (e) {
+                // Ignora erro
+            }
+        }
+
+        function initializeData() {
+            people.forEach(person => {
+                if (!data[person]) {
+                    data[person] = {
+                        aura: 0,
+                        protagonismo: 0,
+                        likes: 0,
+                        dislikes: 0,
+                        comments: [],
+                        userVotes: {}
+                    };
+                } else {
+                    if (!data[person].userVotes) data[person].userVotes = {};
+                    if (!data[person].comments) data[person].comments = [];
+                }
+            });
+        }
+
+        function getUserId() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) {
+                userId = 'guest_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('userId', userId);
+            }
+            return userId;
+        }
+
+        const userId = getUserId();
+
+        function checkUser() {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('guestView').classList.add('hidden');
+                document.getElementById('loggedView').classList.remove('hidden');
+                document.getElementById('username').textContent = userName;
+                
+                if (userName === 'TomáséoAdm') {
+                    isAdmin = true;
+                    document.getElementById('adminBadge').classList.remove('hidden');
+                    document.getElementById('adminBtn').classList.remove('hidden');
+                } else {
+                    isAdmin = false;
+                    document.getElementById('adminBadge').classList.add('hidden');
+                    document.getElementById('adminBtn').classList.add('hidden');
+                }
+            } else {
+                document.getElementById('guestView').classList.remove('hidden');
+                document.getElementById('loggedView').classList.add('hidden');
+                isAdmin = false;
+            }
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('guestView').classList.add('hidden');
+        }
+
+        function hideRegisterForm() {
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('guestView').classList.remove('hidden');
+        }
+
+        function toggleAdminPanel() {
+            document.getElementById('adminPanel').classList.toggle('hidden');
+        }
+
+        function register() {
+            const name = document.getElementById('regName').value.trim();
+            
+            if (name) {
+                localStorage.setItem('userName', name);
+                hideRegisterForm();
+                checkUser();
+                alert('✅ Cadastro realizado com sucesso!');
+            } else {
+                alert('❌ Por favor, insere o teu nome!');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userName');
+            checkUser();
+            renderPeople();
+        }
+
+        function addPerson() {
+            if (!isAdmin) return;
+            const name = document.getElementById('newPersonName').value.trim();
+            if (name && !people.includes(name)) {
+                people.push(name);
+                people.sort();
+                data[name] = {
+                    aura: 0,
+                    protagonismo: 0,
+                    likes: 0,
+                    dislikes: 0,
+                    comments: [],
+                    userVotes: {}
+                };
+                saveToJSONBin();
+                renderPeople();
+                document.getElementById('newPersonName').value = '';
+                alert(`✅ ${name} adicionado!`);
+            }
+        }
+
+        function deletePerson(person) {
+            if (!isAdmin) return;
+            if (confirm(`Tens a certeza que queres remover ${person}?`)) {
+                people = people.filter(p => p !== person);
+                delete data[person];
+                saveToJSONBin();
+                renderPeople();
+            }
+        }
+
+        function updateAura(person, change) {
+            if (data[person]) {
+                data[person].aura += change;
+                saveToJSONBin();
+                renderPeople();
+            }
+        }
+
+        function updateProtagonismo(person, change) {
+            if (data[person]) {
+                data[person].protagonismo = Math.max(0, data[person].protagonismo + change);
+                saveToJSONBin();
+                renderPeople();
+            }
+        }
+
+        function setAuraAdmin(person, value) {
+            if (!isAdmin || !data[person]) return;
+            data[person].aura = parseInt(value) || 0;
+            saveToJSONBin();
+            renderPeople();
+        }
+
+        function setProtagonismoAdmin(person, value) {
+            if (!isAdmin || !data[person]) return;
+            data[person].protagonismo = Math.max(0, parseInt(value) || 0);
+            saveToJSONBin();
+            renderPeople();
+        }
+
+        function setLikesAdmin(person, value) {
+            if (!isAdmin || !data[person]) return;
+            data[person].likes = Math.max(0, parseInt(value) || 0);
+            saveToJSONBin();
+            renderPeople();
+        }
+
+        function setDislikesAdmin(person, value) {
+            if (!isAdmin || !data[person]) return;
+            data[person].dislikes = Math.max(0, parseInt(value) || 0);
+            saveToJSONBin();
+            renderPeople();
+        }
+
+        function toggleLike(person, type) {
+            if (!data[person]) return;
+            
+            const currentVote = data[person].userVotes[userId];
+            
+            if (currentVote === type) {
+                if (type === 'like') data[person].likes--;
+                else data[person].dislikes--;
+                delete data[person].userVotes[userId];
+            } else {
+                if (currentVote === 'like') data[person].likes--;
+                if (currentVote === 'dislike') data[person].dislikes--;
+                
+                if (type === 'like') data[person].likes++;
+                else data[person].dislikes++;
+                data[person].userVotes[userId] = type;
+            }
+            
+            saveToJSONBin();
+            renderPeople();
+        }
+
+        function addComment(person, comment) {
+            if (!data[person]) return;
+            
+            if (comment.trim()) {
+                const censored = censorComment(comment);
+                const userName = localStorage.getItem('userName') || 'Anónimo';
+                
+                data[person].comments.push({
+                    text: censored,
+                    date: new Date().toLocaleString('pt-PT'),
+                    author: userName,
+                    id: Date.now() + '_' + Math.random()
+                });
+                saveToJSONBin();
+                renderPeople();
+            }
+        }
+
+        function deleteComment(person, commentId) {
+            if (!isAdmin || !data[person]) return;
+            data[person].comments = data[person].comments.filter(c => c.id !== commentId);
+            saveToJSONBin();
+            renderPeople();
+        }
+
+        function editComment(person, commentId) {
+            if (!isAdmin || !data[person]) return;
+            const comment = data[person].comments.find(c => c.id === commentId);
+            if (comment) {
+                const newText = prompt('Editar comentário:', comment.text);
+                if (newText !== null && newText.trim()) {
+                    comment.text = censorComment(newText.trim());
+                    saveToJSONBin();
+                    renderPeople();
+                }
+            }
+        }
+
+        function getSortedPeople() {
+            const sortType = document.getElementById('sortSelect').value;
+            const limit = parseInt(document.getElementById('limitSelect').value) || people.length;
+            
+            let sorted = [...people];
+            
+            switch(sortType) {
+                case 'aura-desc':
+                    sorted.sort((a, b) => (data[b]?.aura || 0) - (data[a]?.aura || 0));
+                    break;
+                case 'aura-asc':
+                    sorted.sort((a, b) => (data[a]?.aura || 0) - (data[b]?.aura || 0));
+                    break;
+                case 'prot-desc':
+                    sorted.sort((a, b) => (data[b]?.protagonismo || 0) - (data[a]?.protagonismo || 0));
+                    break;
+                case 'prot-asc':
+                    sorted.sort((a, b) => (data[a]?.protagonismo || 0) - (data[b]?.protagonismo || 0));
+                    break;
+            }
+            
+            return sorted.slice(0, limit);
+        }
+
+        function renderPeople() {
+            const container = document.getElementById('peopleContainer');
+            const sortedPeople = getSortedPeople();
+            
+            container.innerHTML = sortedPeople.map(person => {
+                const personData = data[person] || {aura: 0, protagonismo: 0, likes: 0, dislikes: 0, comments: [], userVotes: {}};
+                const userVote = personData.userVotes[userId];
+                const protWidth = Math.min(personData.protagonismo, 200);
+                
+                return `
+                    <div class="person-card">
+                        <div class="person-header">
+                            <div class="person-name">${person}</div>
+                            ${isAdmin ? `<button class="btn-delete-person" onclick="deletePerson('${person}')">🗑️ Remover</button>` : ''}
+                        </div>
+                        
+                        <div class="stats">
+                            <div class="stat-box">
+                                <div class="stat-label">⚡ Aura</div>
+                                <div class="stat-value">
+                                    ${isAdmin ? `<input type="number" value="${personData.aura}" onchange="setAuraAdmin('${person}', this.value)">` : personData.aura}
+                                </div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">⭐ Protagonismo</div>
+                                <div class="stat-value">
+                                    ${isAdmin ? `<input type="number" value="${personData.protagonismo}" onchange="setProtagonismoAdmin('${person}', this.value)">` : personData.protagonismo + '%'}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="controls-row">
+                            <button class="btn-minus" onclick="updateAura('${person}', -1)">−</button>
+                            <span style="flex: 1; text-align: center; font-weight: bold;">Aura</span>
+                            <button class="btn-plus" onclick="updateAura('${person}', 1)">+</button>
+                        </div>
+
+                        <div class="controls-row">
+                            <button class="btn-minus" onclick="updateProtagonismo('${person}', -5)">−</button>
+                            <span style="flex: 1; text-align: center; font-weight: bold;">Protagonismo</span>
+                            <button class="btn-plus" onclick="updateProtagonismo('${person}', 5)">+</button>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${protWidth}%">
+                                ${personData.protagonismo}%
+                            </div>
+                        </div>
+
+                        <div class="like-section">
+                            <button class="btn-like ${userVote === 'like' ? 'active' : ''}" 
+                                    onclick="toggleLike('${person}', 'like')">
+                                👍 ${isAdmin ? `<input type="number" value="${personData.likes}" onchange="setLikesAdmin('${person}', this.value)" style="width: 50px; display: inline; padding: 2px;">` : personData.likes}
+                            </button>
+                            <button class="btn-dislike ${userVote === 'dislike' ? 'active' : ''}" 
+                                    onclick="toggleLike('${person}', 'dislike')">
+                                👎 ${isAdmin ? `<input type="number" value="${personData.dislikes}" onchange="setDislikesAdmin('${person}', this.value)" style="width: 50px; display: inline; padding: 2px;">` : personData.dislikes}
+                            </button>
+                        </div>
+
+                        <div class="comments-section">
+                            <input type="text" class="comment-input" id="comment-${person}" 
+                                   placeholder="Escreve um comentário...">
+                            <button class="btn-comment" onclick="addComment('${person}', document.getElementById('comment-${person}').value); document.getElementById('comment-${person}').value = ''">
+                                💬 Comentar
+                            </button>
+                            
+                            <div class="comments-list">
+                                ${personData.comments.map(c => `
+                                    <div class="comment">
+                                        <div><strong>${c.author || 'Anónimo'}</strong> • ${c.date}</div>
+                                        <div>${c.text}</div>
+                                        ${isAdmin ? `
+                                            <div class="comment-actions">
+                                                <button onclick="editComment('${person}', '${c.id}')" style="background: #339af0;">✏️</button>
+                                                <button onclick="deleteComment('${person}', '${c.id}')" style="background: #ff6b6b;">🗑️</button>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `).reverse().join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        document.getElementById('themeSelect').addEventListener('change', (e) => {
+            document.body.className = e.target.value;
+            localStorage.setItem('theme', e.target.value);
+        });
+
+        document.getElementById('sortSelect').addEventListener('change', renderPeople);
+        document.getElementById('limitSelect').addEventListener('input', renderPeople);
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.className = savedTheme;
+            document.getElementById('themeSelect').value = savedTheme;
+        }
+
+        document.getElementById('shareLink').textContent = window.location.href;
+
+        checkUser();
+        loadFromJSONBin().then(() => {
+            initializeData();
+            renderPeople();
+        });
+    </script>
+</body>
+</html>
